@@ -2,9 +2,10 @@
 import axios, { AxiosResponse } from 'axios';
 // Define FHIR Patient resource type (simplified version)
 import { Patient } from '../types/patient';
+import { Bundle } from '../types/bundle';
 
 // FHIR server base URL
-const BASE_URL = 'https://demo.kodjin.com/fhir'; // Adjust this based on your FHIR server
+const BASE_URL = 'http://34.68.200.64:8080/fhir'; // Adjust this based on your FHIR server
 
 // Axios instance
 const apiClient = axios.create({
@@ -28,9 +29,9 @@ export const getAllPatients = async(): Promise<Patient[]> => {
 };
 
 // Get a single patient by ID
-export const getPatientById = async(id: string): Promise<Patient> => {
+export const getPatientById = async(id: string): Promise<Bundle> => {
   try {
-    const response: AxiosResponse = await apiClient.get(`/Patient/${id}`);
+    const response: AxiosResponse = await apiClient.get(`/Bundle/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching patient with ID ${id}:`, error);

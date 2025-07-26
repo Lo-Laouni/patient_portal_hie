@@ -87,7 +87,7 @@ export const SideNavigationMenu = (props: React.PropsWithChildren<SideNavigation
         />
       </div>
       <AppFooter>
-        Copyright © {new Date().getFullYear()} <br /> Developer Express Inc.
+        Copyright © {new Date().getFullYear()} <br /> Ministry of Health - Rwanda
       </AppFooter>
     </div>
   );

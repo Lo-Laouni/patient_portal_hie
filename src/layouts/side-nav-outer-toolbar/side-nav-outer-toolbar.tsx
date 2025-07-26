@@ -85,6 +85,7 @@ export const SideNavOuterToolbar = ({ title, children }: React.PropsWithChildren
   return (
     <div className='side-nav-outer-toolbar'>
       <AppHeader className='layout-header' menuToggleEnabled toggleMenu={toggleMenu} title={title} />
+      <img src='imigongo-bg.jpg'  alt='Logo' style={{ height: 45 }}  />
       <Drawer
         className={['drawer layout-body', patchCssClass].join(' ')}
         position='before'

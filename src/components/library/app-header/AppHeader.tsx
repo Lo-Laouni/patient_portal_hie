@@ -19,7 +19,9 @@ export const AppHeader = ({ menuToggleEnabled, title, toggleMenu, className }: A
         <Item visible={menuToggleEnabled} location='before' widget='dxButton' cssClass='menu-button'>
           <Button icon='menu' stylingMode='text' onClick={toggleMenu} />
         </Item>
-        <Item location='before' cssClass='header-title' text={title} visible={!!title} />
+        {/* <Item location='before' cssClass='header-title' text={title} visible={!!title} /> */}
+
+        <Item location='before' cssClass='header-logo'> <img src='patient-portal-logo.svg'  alt='Logo' style={{ height: 55 }}  /> </Item>
         <Item location='after' locateInMenu='auto' cssClass='global-search-box'>
           <TextBox placeholder='Search' width={180} mode='search' stylingMode='filled' />
         </Item>

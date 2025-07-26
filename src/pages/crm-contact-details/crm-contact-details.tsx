@@ -11,6 +11,7 @@ import {
 
 import { Contact } from '../../types/crm-contact';
 import { Patient } from '../../types/patient';
+import { Bundle } from '../../types/bundle';
 
 import {
   getContact,
@@ -24,28 +25,39 @@ import './crm-contact-details.scss';
 import ScrollView from 'devextreme-react/scroll-view';
 
 const CONTACT_ID = 12;
+const PATIENT_ID = '1'
 
 export const CRMContactDetails = () => {
   const [data, setData] = useState<Contact>();
+  const [bundle, setBundle] = useState<Bundle>();
   const [biodata, setBioData] = useState<Patient>();
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    loadData();
+  const loadData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const [patientData, contactData] = await Promise.all([
+        getPatientById(PATIENT_ID),
+        getContact(CONTACT_ID)
+      ]);
+
+      setBundle(patientData);
+      setData(contactData);
+
+      // Extract patient resource from bundle if needed
+      if (patientData) {
+        const patientResource = patientData.entry?.find(e => e.resource?.resourceType === 'Patient')?.resource as Patient | undefined;
+        setBioData(patientResource);
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
-  const loadData = useCallback(() => {
-    setIsLoading(true);
-    Promise.all([
-      getPatientById('7fd44f6a-3028-459a-8c47-94622dcb5623')
-        .then((data_) => {
-          setBioData(data_);
-        }),
-      getContact(CONTACT_ID)
-        .then((data) => {
-          setData(data);
-        }),
-    ]).then(() => { setIsLoading(false); }).catch((error) => console.log(error));
+  useEffect(() => {
+    loadData();
   }, []);
 
   const refresh = useCallback(() => {
@@ -53,6 +65,9 @@ export const CRMContactDetails = () => {
     loadData();
   }, []);
 
+  // console.log('Current bundle state:', bundle);
+  // console.log('biooooooo', biodata);
+  
   return (
     <ScrollView className='view-wrapper-scroll'>
       <div className='view-wrapper view-wrapper-contact-details'>

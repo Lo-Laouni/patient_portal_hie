@@ -20,7 +20,6 @@ export const ContactForm = ({ data, biodata, isLoading = false }: { data?: Conta
   const [bio, setBio] = useState(biodata);
   const dataRef = useRef<Contact>();
 
-  console.log('dadadadadada', biodata); //--------------------------------------------------------
   useEffect(() => {
     setFormData(data);
   }, [data]);
